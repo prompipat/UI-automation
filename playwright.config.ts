@@ -31,23 +31,30 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    storageState: 'playwright/.auth/user.json'
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*auth\.setup\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       name: 'chromium',
+      dependencies: ['setup'],
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
+      dependencies: ['setup'],
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
+      dependencies: ['setup'],
       use: { ...devices['Desktop Safari'] },
     },
 

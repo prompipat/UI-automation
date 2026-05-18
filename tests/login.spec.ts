@@ -1,16 +1,15 @@
-import {test, expect} from '@playwright/test'
-import { LoginPage } from '../pages/login.page'
+import { test } from '../fixtures/base'
+import { expect } from '@playwright/test';
+import { USERS } from '../fixtures/users';
 
-test('success login', async({page}) => {
-    const loginPage = new LoginPage(page);
+test('@smoke success login', async({loginPage, page}) => {
     await loginPage.goto();
-    await loginPage.login('standard_user','secret_sauce');
+    await loginPage.login(USERS.standard.username, USERS.standard.password);
 
     await expect(page).toHaveURL(/inventory/);
 })
 
-test('Invalid login', async({page}) => {
-    const loginPage = new LoginPage(page);
+test('@spike Invalid login', async({loginPage ,page}) => {
     await loginPage.goto();
     await loginPage.login('wrong', 'wrong');
 
